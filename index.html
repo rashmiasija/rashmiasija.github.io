@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rashmi Asija | Oracle D2K & PL/SQL Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0b1120;
+      --bg-soft: #111827;
+      --card: #0f172a;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .page { max-width: 1080px; margin: 0 auto; padding: 24px 32px 64px; }
+
+    /* ====== NAVBAR ====== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { max-width: 1080px; margin: 0 auto; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .nav-left { display: flex; flex-direction: column; gap: 2px; }
+    .nav-name { font-weight: 600; font-size: 1.1rem; }
+    .nav-tag { font-size: 0.83rem; color: var(--text-muted); }
+    .nav-links { display: flex; gap: 16px; font-size: 0.95rem; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 999px; color: var(--text-muted); transition: 0.25s; }
+    .nav-links a:hover { background: var(--accent-soft); color: var(--text-main); }
+
+    @media (max-width: 768px) {
+      .nav { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    /* ====== HERO ====== */
+    .hero-section {
+      margin-top: 28px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #0f172a, #0b1120);
+      padding: 40px 36px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 800px) { .hero { grid-template-columns: 1fr; } }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 3.5vw, 2.8rem);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .hero-highlight {
+      background: linear-gradient(to right, #38bdf8, #06b6d4);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero-role { font-size: 1rem; color: var(--text-muted); margin-bottom: 14px; }
+    .hero-sub { font-size: 1rem; color: var(--text-muted); margin-bottom: 18px; max-width: 40rem; }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-primary, .btn-ghost {
+      padding: 10px 20px; border-radius: 999px; border: 1px solid; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
+    }
+    .btn-primary { border-color: var(--accent); background: var(--accent-soft); color: #e0f2fe; }
+    .btn-primary:hover { background: rgba(56,189,248,0.3); }
+    .btn-ghost { border-color: var(--border); color: var(--text-muted); }
+    .btn-ghost:hover { background: rgba(148,163,184,0.18); color: var(--text-main); }
+
+    .hero-right { border-radius: 18px; padding: 10px; background: var(--card); border: 1px solid var(--border); transition: 0.3s; }
+    .hero-right:hover { transform: scale(1.02); }
+    .hero-photo { width: 100%; border-radius: 14px; object-fit: cover; max-height: 460px; display: block; }
+
+    /* ====== SECTIONS ====== */
+    section.content-section {
+      margin-top: 28px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 32px 36px;
+      scroll-margin-top: 110px; /* For sticky header */
+    }
+    .section-title { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin-bottom: 6px; }
+    .section-subtitle { font-size: 1.35rem; margin-bottom: 16px; font-weight: 600; }
+    .section-text { font-size: 0.97rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ====== TIMELINE ====== */
+    .timeline { display: flex; flex-direction: column; gap: 16px; }
+    .timeline-item { border-radius: 14px; border: 1px solid var(--border); background: #0f172a; padding: 16px 18px; transition: 0.25s; }
+    .timeline-item:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-3px); }
+    .timeline-header { display: flex; justify-content: space-between; gap: 14px; margin-bottom: 4px; }
+    .timeline-role { font-weight: 600; }
+    .timeline-org { color: var(--accent); font-size: 0.92rem; }
+    .timeline-meta { color: var(--text-muted); font-size: 0.85rem; }
+
+    /* ====== PROJECT CARDS ====== */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { border-radius: 14px; border: 1px solid var(--border); padding: 18px 16px; background: #0f172a; color: var(--text-muted); transition: 0.3s; }
+    .card:hover { background: var(--accent-soft); border-color: var(--accent); transform: translateY(-4px); }
+    .card-title { font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
+    .card-tag { font-size: 0.82rem; color: var(--accent); margin-bottom: 8px; }
+
+    /* ====== SKILLS ====== */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .skills-list { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+    .skills-list li { padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border); background: #0f172a; font-size: 0.85rem; color: var(--text-muted); transition: 0.25s; }
+    .skills-list li:hover { background: var(--accent-soft); color: #e0f2fe; border-color: var(--accent); }
+
+    /* ====== EDUCATION ====== */
+    .edu-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); }
+    .edu-table th, .edu-table td { border: 1px solid var(--border); padding: 10px; text-align: left; }
+    .edu-table th { background: #0b1120; color: #e5e7eb; }
+
+    /* ====== CONTACT ====== */
+    .contact-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1.7fr); gap: 22px; font-size: 0.95rem; }
+    .contact-label { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-top: 12px; }
+    .contact-value { margin-top: 4px; }
+    .contact-value a { color: #38bdf8; text-decoration: underline; }
+    @media (max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+
+    footer { text-align: center; margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+
+    /* ====== FADE-IN ANIMATION ====== */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; will-change: opacity, transform; }
+    .fade-in.show { opacity: 1; transform: translateY(0); }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="nav-name">Rashmi Asija</div>
+      <div class="nav-tag">Oracle D2K & PL/SQL Developer</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero-section fade-in" id="top">
+    <div class="hero">
+      <div>
+        <h1 class="hero-title">Hi, I’m <span class="hero-highlight">Rashmi Asija</span></h1>
+        <div class="hero-role">Oracle D2K & PL/SQL Developer</div>
+        <p class="hero-sub">I develop robust database-driven solutions using Oracle Forms, Reports (D2K), SQL, and PL/SQL. Transforming business needs into stable, scalable, and efficient modules.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">View Experience</button>
+          <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Me</button>
+        </div>
+      </div>
+      <div class="hero-right fade-in">
+        <img src="rashmi-photo.jpg" alt="Rashmi Asija" class="hero-photo" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="content-section fade-in" id="about">
+    <div class="section-title">About</div>
+    <div class="section-subtitle">Short Profile</div>
+    <p class="section-text">I am an Oracle Developer specializing in Oracle D2K (Forms & Reports), PL/SQL, and Oracle Database programming. I develop stable forms, efficient queries, and business reports used in daily operations.</p>
+    <p class="section-text" style="margin-top:10px;">My strengths include debugging, optimization, ERP support, and converting business workflows into reliable Oracle solutions.</p>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="content-section fade-in" id="experience">
+    <div class="section-title">Experience</div>
+    <div class="section-subtitle">Work History</div>
+    <div class="timeline">
+      <div class="timeline-item fade-in">
+        <div class="timeline-header">
+          <div class="timeline-org">Eastern Software Systems Pvt. Ltd., Noida</div>
+          <div class="timeline-meta">Apr 2025 – Oct 2025</div>
+        </div>
+        <ul class="timeline-list">
+          <li>Developed PL/SQL packages, triggers, functions.</li>
+          <li>Customized Oracle Forms & Reports.</li>
+          <li>Worked with functional teams for requirement analysis.</li>
+          <li>Debugging & performance improvement.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-header">
+          <div class="timeline-org">Access Infotech Pvt. Ltd., Mohali</div>
+          <div class="timeline-meta">Jul 2022 – Mar 2025</div>
+        </div>
+        <ul class="timeline-list">
+          <li>Maintained Forms, Reports & PL/SQL programs.</li>
+          <li>Improved SQL and PL/SQL performance.</li>
+          <li>Supported ERP database objects & workflows.</li>
+          <li>Participated in design & technical discussions.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="content-section fade-in" id="projects">
+    <div class="section-title">Projects</div>
+    <div class="section-subtitle">Projects / Clients</div>
+    <div class="cards">
+      <div class="card fade-in"><div class="card-title">Directorate of Air Veterans (DAV)</div><div class="card-tag">D2K · PL/SQL · Reports</div><p>Developed and maintained Oracle Forms and Reports for veteran data processing.</p></div>
+      <div class="card fade-in"><div class="card-title">Nectar Life Sciences</div><div class="card-tag">PL/SQL · Reporting</div><p>Created business reports, validation scripts, and SQL-based analytics modules.</p></div>
+      <div class="card fade-in"><div class="card-title">Telema</div><div class="card-tag">ERP · Oracle</div><p>Supported backend PL/SQL objects, form validations, and ERP transactions.</p></div>
+      <div class="card fade-in"><div class="card-title">Ebizframe ERP</div><div class="card-tag">Oracle DB · Customization</div><p>Customized workflows, forms, and PL/SQL packages for ERP modules.</p></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="content-section fade-in" id="skills">
+    <div class="section-title">Skills</div>
+    <div class="section-subtitle">Technical & Soft Skills</div>
+    <div class="skills-grid">
+      <div class="fade-in"><ul class="skills-list"><li>Oracle 11g / 12c</li><li>SQL</li><li>PL/SQL</li><li>Database Design</li><li>Query Optimization</li></ul></div>
+      <div class="fade-in"><ul class="skills-list"><li>Oracle D2K</li><li>Oracle Forms</li><li>Oracle Reports</li><li>PL/SQL Developer</li><li>Toad</li><li>Core Java</li><li>Basic Oracle APEX</li></ul></div>
+      <div class="fade-in"><ul class="skills-list"><li>Leadership</li><li>Teamwork</li><li>Communication</li><li>Punctual & Responsible</li><li>Positive Attitude</li></ul></div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="content-section fade-in" id="education">
+    <div class="section-title">Education</div>
+    <div class="section-subtitle">Academic Background</div>
+    <table class="edu-table fade-in">
+      <thead><tr><th>Year</th><th>Qualification</th><th>Institute</th><th>Board / University</th><th>%</th></tr></thead>
+      <tbody>
+        <tr><td>2022</td><td>MCA</td><td>GJUST, Hisar</td><td>GJUS&T</td><td>71.6%</td></tr>
+        <tr><td>2019</td><td>BCA</td><td>Shah Satnam Ji Girls’ College, Sirsa</td><td>CDLU</td><td>76.56%</td></tr>
+        <tr><td>2016</td><td>12th</td><td>Shah Satnam Ji Girls’ School, Sirsa</td><td>CBSE</td><td>85%</td></tr>
+        <tr><td>2014</td><td>10th</td><td>Shah Satnam Ji Girls’ School, Sirsa</td><td>CBSE</td><td>92%</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="content-section fade-in" id="contact">
+    <div class="section-title">Contact</div>
+    <div class="section-subtitle">Get in Touch</div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-label">Address</div>
+        <div class="contact-value">Sirsa, Haryana, India</div>
+
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:rashmiasija@gmail.com">rashmiasija@gmail.com</a></div>
+
+        <div class="contact-label">Phone</div>
+        <div class="contact-value"><a href="tel:+919991747613">+91 99917 47613</a></div>
+      </div>
+      <div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value"><a href="https://www.linkedin.com/in/rashmiasija" target="_blank">linkedin.com/in/rashmiasija</a></div>
+        <div class="contact-label">GitHub / Portfolio</div>
+        <div class="contact-value"><a href="#">github.com/rashmiasija</a></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>© 2025 Rashmi Asija. All rights reserved.</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const fadeItems = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  fadeItems.forEach(item => observer.observe(item));
+});
+</script>
+
+</body>
+</html>
